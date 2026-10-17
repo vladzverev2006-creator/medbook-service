@@ -1,0 +1,82 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: medbook-postgres
+    restart: unless-stopped
+    command: postgres -c timezone=Asia/Almaty
+    environment:
+      POSTGRES_USER: medbook
+      POSTGRES_PASSWORD: medbook
+      POSTGRES_DB: medbook
+      TZ: Asia/Almaty
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U medbook -d medbook"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+      start_period: 3s
+
+  redis:
+    image: redis:7-alpine
+    container_name: medbook-redis
+    restart: unless-stopped
+    ports:
+      - "6380:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+      start_period: 2s
+
+  mock-gateway:
+    build:
+      context: ./mock_service
+      dockerfile: Dockerfile
+    container_name: medbook-mock-gateway
+    restart: unless-stopped
+    environment:
+      TZ: Asia/Almaty
+    ports:
+      - "8001:8001"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8001/health')"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+      start_period: 3s
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: medbook-backend
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql+psycopg://medbook:medbook@postgres:5432/medbook
+      REDIS_URL: redis://redis:6379/0
+      MOCK_SERVICE_URL: http://mock-gateway:8001
+      JWT_SECRET: medbook-super-secret-jwt-key-2026-production
+      TZ: Asia/Almaty
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      mock-gateway:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+volumes:
+  postgres_data:

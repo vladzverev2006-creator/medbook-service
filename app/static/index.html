@@ -1,0 +1,2472 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark" data-palette="teal">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MedBook — Онлайн-запись к врачам</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+  <style>
+    /* =====================================================================
+       MATERIAL DESIGN 3 (MATERIAL YOU) DESIGN SYSTEM TOKENS
+       ===================================================================== */
+    :root {
+      --font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+      --radius-xs: 8px;
+      --radius-sm: 12px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-xl: 28px;
+      --radius-pill: 9999px;
+      --transition-standard: all 0.25s cubic-bezier(0.2, 0, 0, 1);
+    }
+
+    /* --- Theme Palette: Medical Teal (Default) --- */
+    [data-palette="teal"][data-theme="dark"] {
+      --md-sys-color-background: #0f1416;
+      --md-sys-color-on-background: #deeaed;
+      --md-sys-color-surface: #0f1416;
+      --md-sys-color-surface-container-lowest: #0a0f11;
+      --md-sys-color-surface-container-low: #171d1f;
+      --md-sys-color-surface-container: #1b2123;
+      --md-sys-color-surface-container-high: #252b2e;
+      --md-sys-color-surface-container-highest: #303639;
+      --md-sys-color-on-surface: #deeaed;
+      --md-sys-color-on-surface-variant: #bfc8cb;
+      --md-sys-color-primary: #4fd8eb;
+      --md-sys-color-on-primary: #00363d;
+      --md-sys-color-primary-container: #004e57;
+      --md-sys-color-on-primary-container: #97f0ff;
+      --md-sys-color-secondary: #b1cbd0;
+      --md-sys-color-on-secondary: #1c3438;
+      --md-sys-color-secondary-container: #334a4f;
+      --md-sys-color-on-secondary-container: #cde7ec;
+      --md-sys-color-outline: #899295;
+      --md-sys-color-outline-variant: #3f484b;
+      --md-sys-color-error: #ffb4ab;
+      --md-sys-color-error-container: #93000a;
+      --md-sys-color-on-error-container: #ffdad6;
+      --md-sys-color-success: #7cd992;
+      --md-sys-color-success-container: #005322;
+      --md-sys-color-on-success-container: #98f6ad;
+    }
+    [data-palette="teal"][data-theme="light"] {
+      --md-sys-color-background: #f8fafb;
+      --md-sys-color-on-background: #171d1f;
+      --md-sys-color-surface: #f8fafb;
+      --md-sys-color-surface-container-lowest: #ffffff;
+      --md-sys-color-surface-container-low: #f2f4f6;
+      --md-sys-color-surface-container: #eceef0;
+      --md-sys-color-surface-container-high: #e6e8ea;
+      --md-sys-color-surface-container-highest: #e0e3e5;
+      --md-sys-color-on-surface: #171d1f;
+      --md-sys-color-on-surface-variant: #3f484b;
+      --md-sys-color-primary: #006874;
+      --md-sys-color-on-primary: #ffffff;
+      --md-sys-color-primary-container: #97f0ff;
+      --md-sys-color-on-primary-container: #001f24;
+      --md-sys-color-secondary: #4a6267;
+      --md-sys-color-on-secondary: #ffffff;
+      --md-sys-color-secondary-container: #cde7ec;
+      --md-sys-color-on-secondary-container: #051f23;
+      --md-sys-color-outline: #6f797b;
+      --md-sys-color-outline-variant: #bfc8cb;
+      --md-sys-color-error: #ba1a1a;
+      --md-sys-color-error-container: #ffdad6;
+      --md-sys-color-on-error-container: #410002;
+      --md-sys-color-success: #198754;
+      --md-sys-color-success-container: #d1e7dd;
+      --md-sys-color-on-success-container: #0f5132;
+    }
+
+    /* --- Theme Palette: Dynamic Indigo --- */
+    [data-palette="indigo"][data-theme="dark"] {
+      --md-sys-color-background: #111318;
+      --md-sys-color-on-background: #e2e2e9;
+      --md-sys-color-surface: #111318;
+      --md-sys-color-surface-container-lowest: #0c0e13;
+      --md-sys-color-surface-container-low: #191c20;
+      --md-sys-color-surface-container: #1d2024;
+      --md-sys-color-surface-container-high: #282a2f;
+      --md-sys-color-surface-container-highest: #33353a;
+      --md-sys-color-on-surface: #e2e2e9;
+      --md-sys-color-on-surface-variant: #c4c6d0;
+      --md-sys-color-primary: #b1c5ff;
+      --md-sys-color-on-primary: #002c71;
+      --md-sys-color-primary-container: #1b439c;
+      --md-sys-color-on-primary-container: #d9e2ff;
+      --md-sys-color-secondary: #bfc6dc;
+      --md-sys-color-on-secondary: #293041;
+      --md-sys-color-secondary-container: #3f4759;
+      --md-sys-color-on-secondary-container: #dbe2f9;
+      --md-sys-color-outline: #8e9099;
+      --md-sys-color-outline-variant: #44474f;
+      --md-sys-color-error: #ffb4ab;
+      --md-sys-color-error-container: #93000a;
+      --md-sys-color-on-error-container: #ffdad6;
+      --md-sys-color-success: #7cd992;
+      --md-sys-color-success-container: #005322;
+      --md-sys-color-on-success-container: #98f6ad;
+    }
+    [data-palette="indigo"][data-theme="light"] {
+      --md-sys-color-background: #fdfbff;
+      --md-sys-color-on-background: #1a1b20;
+      --md-sys-color-surface: #fdfbff;
+      --md-sys-color-surface-container-lowest: #ffffff;
+      --md-sys-color-surface-container-low: #f3f3fa;
+      --md-sys-color-surface-container: #ededf4;
+      --md-sys-color-surface-container-high: #e7e8ef;
+      --md-sys-color-surface-container-highest: #e1e2e9;
+      --md-sys-color-on-surface: #1a1b20;
+      --md-sys-color-on-surface-variant: #44474f;
+      --md-sys-color-primary: #385ca9;
+      --md-sys-color-on-primary: #ffffff;
+      --md-sys-color-primary-container: #d9e2ff;
+      --md-sys-color-on-primary-container: #001945;
+      --md-sys-color-secondary: #575e71;
+      --md-sys-color-on-secondary: #ffffff;
+      --md-sys-color-secondary-container: #dbe2f9;
+      --md-sys-color-on-secondary-container: #141b2c;
+      --md-sys-color-outline: #74777f;
+      --md-sys-color-outline-variant: #c4c6d0;
+      --md-sys-color-error: #ba1a1a;
+      --md-sys-color-error-container: #ffdad6;
+      --md-sys-color-on-error-container: #410002;
+      --md-sys-color-success: #198754;
+      --md-sys-color-success-container: #d1e7dd;
+      --md-sys-color-on-success-container: #0f5132;
+    }
+
+    /* --- Theme Palette: Sakura Rose --- */
+    [data-palette="rose"][data-theme="dark"] {
+      --md-sys-color-background: #171214;
+      --md-sys-color-on-background: #ecdfe1;
+      --md-sys-color-surface: #171214;
+      --md-sys-color-surface-container-lowest: #120d0f;
+      --md-sys-color-surface-container-low: #201a1c;
+      --md-sys-color-surface-container: #241e20;
+      --md-sys-color-surface-container-high: #2f282b;
+      --md-sys-color-surface-container-highest: #3a3336;
+      --md-sys-color-on-surface: #ecdfe1;
+      --md-sys-color-on-surface-variant: #d5c2c5;
+      --md-sys-color-primary: #ffb2bc;
+      --md-sys-color-on-primary: #541d28;
+      --md-sys-color-primary-container: #72333e;
+      --md-sys-color-on-primary-container: #ffd9de;
+      --md-sys-color-secondary: #e4bdc2;
+      --md-sys-color-on-secondary: #43292e;
+      --md-sys-color-secondary-container: #5b3f44;
+      --md-sys-color-on-secondary-container: #ffd9de;
+      --md-sys-color-outline: #9e8c8f;
+      --md-sys-color-outline-variant: #514346;
+      --md-sys-color-error: #ffb4ab;
+      --md-sys-color-error-container: #93000a;
+      --md-sys-color-on-error-container: #ffdad6;
+      --md-sys-color-success: #7cd992;
+      --md-sys-color-success-container: #005322;
+      --md-sys-color-on-success-container: #98f6ad;
+    }
+    [data-palette="rose"][data-theme="light"] {
+      --md-sys-color-background: #fff8f8;
+      --md-sys-color-on-background: #201a1c;
+      --md-sys-color-surface: #fff8f8;
+      --md-sys-color-surface-container-lowest: #ffffff;
+      --md-sys-color-surface-container-low: #faf1f3;
+      --md-sys-color-surface-container: #f4ebed;
+      --md-sys-color-surface-container-high: #eee5e7;
+      --md-sys-color-surface-container-highest: #e8dfe1;
+      --md-sys-color-on-surface: #201a1c;
+      --md-sys-color-on-surface-variant: #514346;
+      --md-sys-color-primary: #8f4a56;
+      --md-sys-color-on-primary: #ffffff;
+      --md-sys-color-primary-container: #ffd9de;
+      --md-sys-color-on-primary-container: #3b0815;
+      --md-sys-color-secondary: #74565b;
+      --md-sys-color-on-secondary: #ffffff;
+      --md-sys-color-secondary-container: #ffd9de;
+      --md-sys-color-on-secondary-container: #2b1519;
+      --md-sys-color-outline: #847376;
+      --md-sys-color-outline-variant: #d5c2c5;
+      --md-sys-color-error: #ba1a1a;
+      --md-sys-color-error-container: #ffdad6;
+      --md-sys-color-on-error-container: #410002;
+      --md-sys-color-success: #198754;
+      --md-sys-color-success-container: #d1e7dd;
+      --md-sys-color-on-success-container: #0f5132;
+    }
+
+    /* =====================================================================
+       GLOBAL RESET & BASE STYLES
+       ===================================================================== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background-color: var(--md-sys-color-background);
+      color: var(--md-sys-color-on-background);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.5;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+
+    /* =====================================================================
+       TOP APP BAR (MD3)
+       ===================================================================== */
+    .top-app-bar {
+      background-color: var(--md-sys-color-surface-container);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+      flex-wrap: wrap;
+    }
+
+    .app-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--md-sys-color-primary);
+    }
+
+    .brand-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-sm);
+      background: var(--md-sys-color-primary-container);
+      color: var(--md-sys-color-on-primary-container);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+
+    .brand-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--md-sys-color-on-surface);
+    }
+    .brand-badge {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      background: var(--md-sys-color-secondary-container);
+      color: var(--md-sys-color-on-secondary-container);
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+
+    /* System Telemetry & Health */
+    .app-telemetry {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .telemetry-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background: var(--md-sys-color-surface-container-high);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--md-sys-color-on-surface-variant);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--md-sys-color-success);
+      display: inline-block;
+      box-shadow: 0 0 8px var(--md-sys-color-success);
+    }
+    .status-dot.pulse {
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.2); opacity: 1; }
+      100% { transform: scale(0.95); opacity: 0.8; }
+    }
+
+    /* Quick Demo Login Segmented Button */
+    .demo-login-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .segmented-group {
+      display: inline-flex;
+      background: var(--md-sys-color-surface-container-lowest);
+      border-radius: var(--radius-pill);
+      padding: 4px;
+      border: 1px solid var(--md-sys-color-outline-variant);
+    }
+
+    .segmented-btn {
+      background: transparent;
+      border: none;
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--md-sys-color-on-surface-variant);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition-standard);
+    }
+
+    .segmented-btn:hover {
+      background: var(--md-sys-color-surface-container-high);
+      color: var(--md-sys-color-on-surface);
+    }
+
+    .segmented-btn.active {
+      background: var(--md-sys-color-primary-container);
+      color: var(--md-sys-color-on-primary-container);
+      font-weight: 700;
+    }
+
+    /* Theme Controls */
+    .theme-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--md-sys-color-surface-container-high);
+      border: none;
+      color: var(--md-sys-color-on-surface);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition-standard);
+    }
+    .icon-btn:hover {
+      background: var(--md-sys-color-primary-container);
+      color: var(--md-sys-color-on-primary-container);
+    }
+
+    /* Palette picker dropdown */
+    .palette-select {
+      background: var(--md-sys-color-surface-container-high);
+      color: var(--md-sys-color-on-surface);
+      border: 1px solid var(--md-sys-color-outline-variant);
+      padding: 6px 12px;
+      border-radius: var(--radius-pill);
+      font-family: inherit;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    /* =====================================================================
+       MAIN LAYOUT
+       ===================================================================== */
+    .main-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 28px;
+      flex: 1;
+      width: 100%;
+    }
+    @media (max-width: 1080px) {
+      .main-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* =====================================================================
+       MD3 CARDS & TONAL SURFACES
+       ===================================================================== */
+    .md3-card {
+      background-color: var(--md-sys-color-surface-container-low);
+      border-radius: var(--radius-xl);
+      padding: 24px;
+      transition: var(--transition-standard);
+      position: relative;
+    }
+
+    .md3-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .card-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--md-sys-color-on-surface);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card-subtitle {
+      font-size: 13px;
+      color: var(--md-sys-color-on-surface-variant);
+      margin-top: 2px;
+    }
+
+    /* =====================================================================
+       MD3 FILTER CHIPS
+       ===================================================================== */
+    .chips-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .filter-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 16px;
+      border-radius: var(--radius-pill);
+      background: var(--md-sys-color-surface-container);
+      color: var(--md-sys-color-on-surface-variant);
+      border: 1px solid var(--md-sys-color-outline-variant);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition-standard);
+      user-select: none;
+    }
+
+    .filter-chip:hover {
+      background: var(--md-sys-color-surface-container-high);
+      color: var(--md-sys-color-on-surface);
+    }
+
+    .filter-chip.active {
+      background: var(--md-sys-color-secondary-container);
+      color: var(--md-sys-color-on-secondary-container);
+      border-color: transparent;
+      font-weight: 700;
+    }
+
+    .filter-chip.active::before {
+      content: "check";
+      font-family: 'Material Symbols Outlined';
+      font-size: 16px;
+    }
+
+    /* =====================================================================
+       DOCTOR CARDS & SCHEDULE
+       ===================================================================== */
+    .doctors-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .doctor-card {
+      background: var(--md-sys-color-surface-container);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      transition: var(--transition-standard);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .doctor-card:hover {
+      background: var(--md-sys-color-surface-container-high);
+    }
+
+    .doctor-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .doctor-info-main {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .doctor-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--md-sys-color-primary-container);
+      color: var(--md-sys-color-on-primary-container);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+    }
+
+    .doctor-name {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--md-sys-color-on-surface);
+    }
+
+    .doctor-meta {
+      font-size: 13px;
+      color: var(--md-sys-color-on-surface-variant);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 2px;
+    }
+
+    .doctor-price-tag {
+      text-align: right;
+    }
+
+    .price-value {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--md-sys-color-primary);
+    }
+    .price-sub {
+      font-size: 11px;
+      color: var(--md-sys-color-on-surface-variant);
+    }
+
+    /* Time Slots Area */
+    .slots-container {
+      background: var(--md-sys-color-surface-container-low);
+      border-radius: var(--radius-md);
+      padding: 16px;
+    }
+
+    .slots-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--md-sys-color-on-surface);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .slots-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .slot-chip {
+      padding: 8px 14px;
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition-standard);
+    }
+
+    /* Available Slot */
+    .slot-chip.available {
+      background: var(--md-sys-color-primary-container);
+      color: var(--md-sys-color-on-primary-container);
+    }
+    .slot-chip.available:hover {
+      filter: brightness(1.15);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    /* Booked Slot (Disabled / Double-Booking Test) */
+    .slot-chip.booked {
+      background: var(--md-sys-color-surface-container-highest);
+      color: var(--md-sys-color-on-surface-variant);
+      opacity: 0.6;
+      cursor: pointer;
+      position: relative;
+    }
+    .slot-chip.booked:hover {
+      opacity: 1;
+      background: var(--md-sys-color-error-container);
+      color: var(--md-sys-color-on-error-container);
+    }
+
+    /* =====================================================================
+       BUTTONS & MD3 CONTROLS
+       ===================================================================== */
+    .btn-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 24px;
+      border-radius: var(--radius-pill);
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: var(--transition-standard);
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--md-sys-color-primary);
+      color: var(--md-sys-color-on-primary);
+    }
+    .btn-primary:hover {
+      filter: brightness(1.1);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    }
+
+    .btn-tonal {
+      background: var(--md-sys-color-secondary-container);
+      color: var(--md-sys-color-on-secondary-container);
+    }
+    .btn-tonal:hover {
+      filter: brightness(1.1);
+    }
+
+    .btn-danger-tonal {
+      background: var(--md-sys-color-error-container);
+      color: var(--md-sys-color-on-error-container);
+    }
+    .btn-danger-tonal:hover {
+      filter: brightness(1.1);
+    }
+
+    .btn-sm {
+      padding: 6px 14px;
+      font-size: 12px;
+      border-radius: var(--radius-pill);
+    }
+
+    /* =====================================================================
+       RIGHT COLUMN: MY APPOINTMENTS & MOCK GATEWAY CONTROL
+       ===================================================================== */
+    .right-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* Appointments List */
+    .appointment-item {
+      background: var(--md-sys-color-surface-container);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-bottom: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .appt-header {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .appt-badges {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      align-self: flex-start;
+    }
+
+    .md3-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+      height: 24px;
+      padding: 0 10px;
+      font-size: 11px;
+      font-weight: 600;
+      line-height: 1;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      flex-shrink: 0;
+    }
+
+    .badge-pending {
+      background: #ffb74d;
+      color: #3e2723;
+    }
+    .badge-confirmed {
+      background: var(--md-sys-color-success-container);
+      color: var(--md-sys-color-on-success-container);
+    }
+    .badge-cancelled {
+      background: var(--md-sys-color-surface-container-highest);
+      color: var(--md-sys-color-on-surface-variant);
+    }
+
+    .badge-unpaid {
+      background: var(--md-sys-color-error-container);
+      color: var(--md-sys-color-on-error-container);
+    }
+    .badge-paid {
+      background: var(--md-sys-color-primary-container);
+      color: var(--md-sys-color-on-primary-container);
+    }
+    .badge-refunded {
+      background: var(--md-sys-color-secondary-container);
+      color: var(--md-sys-color-on-secondary-container);
+    }
+    .badge-timer {
+      background: var(--md-sys-color-primary-container);
+      color: var(--md-sys-color-on-primary-container);
+      font-variant-numeric: tabular-nums;
+      text-transform: none;
+      letter-spacing: 0.2px;
+    }
+
+    /* Mock Gateway Console Card */
+    .mock-console {
+      background: var(--md-sys-color-surface-container-low);
+      border: 1px solid var(--md-sys-color-outline-variant);
+    }
+
+    .notification-stream {
+      max-height: 240px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-right: 4px;
+    }
+
+    .notify-card {
+      background: var(--md-sys-color-surface-container);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      font-size: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      border-left: 3px solid var(--md-sys-color-primary);
+    }
+
+    .notify-event {
+      font-weight: 700;
+      color: var(--md-sys-color-primary);
+      text-transform: uppercase;
+      font-size: 10px;
+      letter-spacing: 0.5px;
+    }
+
+    /* Admin Management Form Drawer / Panel */
+    .admin-panel {
+      background: var(--md-sys-color-surface-container-high);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-bottom: 20px;
+      border-left: 4px solid var(--md-sys-color-primary);
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+    .form-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--md-sys-color-on-surface-variant);
+    }
+    .form-input {
+      background: var(--md-sys-color-surface-container);
+      border: 1px solid var(--md-sys-color-outline-variant);
+      border-radius: var(--radius-sm);
+      padding: 8px 12px;
+      color: var(--md-sys-color-on-surface);
+      font-family: inherit;
+      font-size: 13px;
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: var(--md-sys-color-primary);
+    }
+
+    /* =====================================================================
+       MD3 SNACKBAR (NOTIFICATIONS)
+       ===================================================================== */
+    .snackbar-container {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      pointer-events: none;
+    }
+
+    .md3-snackbar {
+      background: var(--md-sys-color-surface-container-highest);
+      color: var(--md-sys-color-on-surface);
+      border-radius: var(--radius-md);
+      padding: 12px 20px;
+      font-size: 13px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      pointer-events: auto;
+      animation: slideUp 0.3s cubic-bezier(0.2, 0, 0, 1);
+      max-width: 500px;
+    }
+
+    .md3-snackbar.error {
+      background: var(--md-sys-color-error-container);
+      color: var(--md-sys-color-on-error-container);
+    }
+
+    .md3-snackbar.success {
+      background: var(--md-sys-color-success-container);
+      color: var(--md-sys-color-on-success-container);
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* =====================================================================
+       USER BADGE (TOP APP BAR)
+       ===================================================================== */
+    .demo-login-bar { flex-wrap: wrap; }
+    .user-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background: var(--md-sys-color-surface-container-high);
+    }
+    .user-badge-text { display: flex; flex-direction: column; line-height: 1.2; }
+    .user-badge-name { font-size: 12px; font-weight: 700; color: var(--md-sys-color-on-surface); }
+    .user-badge-email { font-size: 11px; color: var(--md-sys-color-on-surface-variant); }
+    .user-badge-email:empty { display: none; }
+
+    /* =====================================================================
+       MD3 DIALOG (SCRIM + CONTAINER) & TABS
+       ===================================================================== */
+    .md3-scrim {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 900;
+      padding: 16px;
+    }
+    .md3-scrim.open { display: flex; animation: scrimIn 0.2s ease; }
+    @keyframes scrimIn { from { opacity: 0; } to { opacity: 1; } }
+
+    .md3-dialog {
+      background: var(--md-sys-color-surface-container-high);
+      color: var(--md-sys-color-on-surface);
+      border-radius: var(--radius-xl);
+      padding: 24px;
+      width: min(440px, 100%);
+      max-height: 92vh;
+      overflow-y: auto;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      animation: dialogIn 0.25s cubic-bezier(0.2, 0, 0, 1);
+    }
+    @keyframes dialogIn {
+      from { transform: scale(0.92) translateY(12px); opacity: 0; }
+      to { transform: scale(1) translateY(0); opacity: 1; }
+    }
+    .dialog-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--md-sys-color-primary-container);
+      color: var(--md-sys-color-on-primary-container);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin: 0 auto 8px;
+    }
+    .dialog-headline {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 500;
+      margin-bottom: 16px;
+    }
+    .md3-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--md-sys-color-outline-variant);
+      margin-bottom: 20px;
+    }
+    .md3-tab {
+      flex: 1;
+      background: none;
+      border: none;
+      padding: 12px 8px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--md-sys-color-on-surface-variant);
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      border-radius: 12px 12px 0 0;
+      transition: var(--transition-standard);
+    }
+    .md3-tab:hover { background: var(--md-sys-color-surface-container-highest); }
+    .md3-tab.active {
+      color: var(--md-sys-color-primary);
+      border-bottom-color: var(--md-sys-color-primary);
+      font-weight: 700;
+    }
+    .dialog-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 20px;
+    }
+    .btn-text {
+      background: transparent;
+      color: var(--md-sys-color-primary);
+    }
+    .btn-text:hover { background: var(--md-sys-color-surface-container-highest); }
+    .dialog-error {
+      background: var(--md-sys-color-error-container);
+      color: var(--md-sys-color-on-error-container);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      font-size: 13px;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===================================================================
+       TOP APP BAR
+       =================================================================== -->
+  <header class="top-app-bar">
+    <div style="display:flex; align-items:center; gap: 16px;">
+      <a href="/" class="app-brand">
+        <div class="brand-icon">
+          <span class="material-symbols-outlined">health_metrics</span>
+        </div>
+        <div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span class="brand-title">MedBook</span>
+            <span class="brand-badge">Material You</span>
+          </div>
+          <div style="font-size:11px; color:var(--md-sys-color-on-surface-variant);">Онлайн-запись к врачам</div>
+        </div>
+      </a>
+
+      <!-- Telemetry Chip -->
+      <div class="app-telemetry">
+        <div class="telemetry-chip" id="healthChip">
+          <span class="status-dot pulse" id="healthDot"></span>
+          <span id="healthText">Система: OK</span>
+        </div>
+        <div class="telemetry-chip" id="latencyChip" title="Задержка последнего HTTP запроса (X-Process-Time-Ms)">
+          <span class="material-symbols-outlined" style="font-size:14px;">speed</span>
+          <span id="latencyText">-- ms</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Demo Logins (1-Click) -->
+    <div class="demo-login-bar">
+      <div class="segmented-group" id="demoSegmented">
+        <button class="segmented-btn" id="btnUserPatient1" onclick="loginDemo('patient1')">
+          <span class="material-symbols-outlined" style="font-size:16px;">person</span>
+          Пациент 1
+        </button>
+        <button class="segmented-btn" id="btnUserPatient2" onclick="loginDemo('patient2')">
+          <span class="material-symbols-outlined" style="font-size:16px;">person_add</span>
+          Пациент 2 (Гонка)
+        </button>
+        <button class="segmented-btn" id="btnUserAdmin" onclick="loginDemo('admin')">
+          <span class="material-symbols-outlined" style="font-size:16px;">admin_panel_settings</span>
+          Админ
+        </button>
+      </div>
+
+      <div class="user-badge" id="currentUserBadge" style="display:none;">
+        <span class="material-symbols-outlined" style="font-size:20px; color:var(--md-sys-color-primary);">account_circle</span>
+        <div class="user-badge-text">
+          <span id="currentUserName" class="user-badge-name"></span>
+          <span id="currentUserEmail" class="user-badge-email"></span>
+        </div>
+        <span class="md3-badge badge-paid" id="currentUserRole"></span>
+      </div>
+
+      <button class="btn-pill btn-tonal btn-sm" id="btnAccount" onclick="openAuthDialog('login')">
+        <span class="material-symbols-outlined" style="font-size:16px;">manage_accounts</span>
+        <span id="btnAccountLabel">Аккаунт / Регистрация</span>
+      </button>
+      <button class="btn-pill btn-danger-tonal btn-sm" id="btnLogout" onclick="logout()" style="display:none;">
+        <span class="material-symbols-outlined" style="font-size:16px;">logout</span>
+        Выход
+      </button>
+    </div>
+
+    <!-- Theme & Palette Selectors -->
+    <div class="theme-controls">
+      <select class="palette-select" id="paletteSelect" onchange="changePalette(this.value)">
+        <option value="teal">Medical Teal</option>
+        <option value="indigo">Dynamic Indigo</option>
+        <option value="rose">Sakura Rose</option>
+      </select>
+
+      <button class="icon-btn" onclick="toggleTheme()" title="Переключить тему">
+        <span class="material-symbols-outlined" id="themeIcon">light_mode</span>
+      </button>
+
+      <a href="/docs" target="_blank" class="icon-btn" title="OpenAPI / Swagger Docs">
+        <span class="material-symbols-outlined">api</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- ===================================================================
+       MAIN CONTAINER
+       =================================================================== -->
+  <main class="main-container">
+
+    <!-- LEFT / CENTER: CATALOG & SLOTS -->
+    <section>
+      <!-- Admin Management Panel (Visible only when logged as admin) -->
+      <div id="adminPanel" class="admin-panel" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
+          <h3 style="font-size:16px; font-weight:700; display:flex; align-items:center; gap:8px; margin:0;">
+            <span class="material-symbols-outlined" style="color:var(--md-sys-color-primary);">admin_panel_settings</span>
+            Панель администратора
+          </h3>
+          <span style="font-size:11px; color:var(--md-sys-color-on-surface-variant);">
+            Управление клиниками, специализациями, врачами и расписанием (RBAC: admin)
+          </span>
+        </div>
+
+        <div class="md3-tabs" style="margin-bottom:16px;">
+          <button type="button" class="md3-tab active" id="tabAdminSlot" onclick="switchAdminTab('slot')">+ Тайм-слот</button>
+          <button type="button" class="md3-tab" id="tabAdminDoctor" onclick="switchAdminTab('doctor')">+ Врач</button>
+          <button type="button" class="md3-tab" id="tabAdminClinic" onclick="switchAdminTab('clinic')">+ Клиника</button>
+          <button type="button" class="md3-tab" id="tabAdminSpec" onclick="switchAdminTab('spec')">+ Специализация</button>
+        </div>
+
+        <!-- Tab 1: + Тайм-слот -->
+        <div id="adminPaneSlot">
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:12px;">
+            <div class="form-group">
+              <label class="form-label">Врач</label>
+              <select id="adminDoctorSelect" class="form-input"></select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Начало приёма</label>
+              <input type="datetime-local" id="adminSlotStart" class="form-input">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Окончание приёма</label>
+              <input type="datetime-local" id="adminSlotEnd" class="form-input">
+            </div>
+          </div>
+          <button class="btn-pill btn-primary btn-sm" onclick="createSlotAdmin()">
+            <span class="material-symbols-outlined" style="font-size:16px;">add</span>
+            Создать слот (с инвалидацией кэша в Redis)
+          </button>
+        </div>
+
+        <!-- Tab 2: + Врач -->
+        <div id="adminPaneDoctor" style="display:none;">
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:12px;">
+            <div class="form-group">
+              <label class="form-label">ФИО врача</label>
+              <input type="text" id="adminDocName" class="form-input" placeholder="Сатпаев Арман Болатович">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Клиника</label>
+              <select id="adminDocClinic" class="form-input"></select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Специализация</label>
+              <select id="adminDocSpec" class="form-input"></select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Стаж (лет)</label>
+              <input type="number" id="adminDocExp" class="form-input" min="0" max="80" value="8">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Стоимость приёма (₸)</label>
+              <input type="number" id="adminDocPrice" class="form-input" min="100" step="500" value="12000">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Рейтинг (0–5)</label>
+              <input type="number" id="adminDocRating" class="form-input" min="0" max="5" step="0.1" value="4.9">
+            </div>
+          </div>
+          <button class="btn-pill btn-primary btn-sm" onclick="createDoctorAdmin()">
+            <span class="material-symbols-outlined" style="font-size:16px;">person_add</span>
+            Добавить врача (с инвалидацией кэша в Redis)
+          </button>
+        </div>
+
+        <!-- Tab 3: + Клиника -->
+        <div id="adminPaneClinic" style="display:none;">
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:12px;">
+            <div class="form-group">
+              <label class="form-label">Название клиники</label>
+              <input type="text" id="adminClinicName" class="form-input" placeholder="Mediker Prime">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Город</label>
+              <input type="text" id="adminClinicCity" class="form-input" placeholder="Алматы" value="Алматы">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Адрес</label>
+              <input type="text" id="adminClinicAddress" class="form-input" placeholder="пр. Достык, 140">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Рейтинг (0–5)</label>
+              <input type="number" id="adminClinicRating" class="form-input" min="0" max="5" step="0.1" value="4.8">
+            </div>
+          </div>
+          <button class="btn-pill btn-primary btn-sm" onclick="createClinicAdmin()">
+            <span class="material-symbols-outlined" style="font-size:16px;">domain_add</span>
+            Создать клинику
+          </button>
+        </div>
+
+        <!-- Tab 4: + Специализация -->
+        <div id="adminPaneSpec" style="display:none;">
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:12px;">
+            <div class="form-group">
+              <label class="form-label">Название специализации</label>
+              <input type="text" id="adminSpecName" class="form-input" placeholder="Эндокринолог">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Описание</label>
+              <input type="text" id="adminSpecDesc" class="form-input" placeholder="Диагностика и лечение эндокринной системы">
+            </div>
+          </div>
+          <button class="btn-pill btn-primary btn-sm" onclick="createSpecAdmin()">
+            <span class="material-symbols-outlined" style="font-size:16px;">medical_services</span>
+            Создать специализацию
+          </button>
+        </div>
+      </div>
+
+      <div class="md3-card">
+        <div class="md3-card-header">
+          <div>
+            <h2 class="card-title">
+              <span class="material-symbols-outlined" style="color:var(--md-sys-color-primary);">stethoscope</span>
+              Каталог врачей и расписание
+            </h2>
+            <div class="card-subtitle">Выберите врача и удобный свободный тайм-слот для записи</div>
+          </div>
+        </div>
+
+        <!-- Filter Chips: City -->
+        <div style="margin-bottom:8px; font-size:12px; font-weight:700; color:var(--md-sys-color-on-surface-variant);">ГОРОД:</div>
+        <div class="chips-group" id="cityChips">
+          <button class="filter-chip active" onclick="setCityFilter(null, this)">Все города</button>
+          <button class="filter-chip" onclick="setCityFilter('Алматы', this)">Алматы</button>
+          <button class="filter-chip" onclick="setCityFilter('Астана', this)">Астана</button>
+        </div>
+
+        <!-- Filter Chips: Specialization -->
+        <div style="margin-bottom:8px; font-size:12px; font-weight:700; color:var(--md-sys-color-on-surface-variant);">СПЕЦИАЛИЗАЦИЯ:</div>
+        <div class="chips-group" id="specChips">
+          <button class="filter-chip active" onclick="setSpecFilter(null, this)">Все специализации</button>
+          <!-- Dynamic specializations populated by JS -->
+        </div>
+
+        <!-- Doctors List -->
+        <div class="doctors-grid" id="doctorsList">
+          <div style="text-align:center; padding:40px; color:var(--md-sys-color-on-surface-variant);">
+            Загрузка каталога врачей...
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT STACK: MY APPOINTMENTS & MOCK GATEWAY CONSOLE -->
+    <aside class="right-stack">
+
+      <!-- My Appointments Card -->
+      <div class="md3-card">
+        <div class="md3-card-header">
+          <div>
+            <h2 class="card-title">
+              <span class="material-symbols-outlined" style="color:var(--md-sys-color-primary);">event_available</span>
+              Мои записи
+            </h2>
+            <div class="card-subtitle" id="myApptSubtitle">История и текущие бронирования</div>
+          </div>
+          <button class="icon-btn" onclick="loadMyAppointments()" title="Обновить список">
+            <span class="material-symbols-outlined">refresh</span>
+          </button>
+        </div>
+
+        <div id="myAppointmentsList">
+          <div style="text-align:center; padding:24px; color:var(--md-sys-color-on-surface-variant); font-size:13px;">
+            Нет активных записей.
+          </div>
+        </div>
+      </div>
+
+      <!-- System Design Demo Card: Mock Gateway & Notifications -->
+      <div class="md3-card mock-console">
+        <div class="md3-card-header" style="margin-bottom:12px;">
+          <div>
+            <h2 class="card-title" style="font-size:17px;">
+              <span class="material-symbols-outlined" style="color:var(--md-sys-color-primary);">hub</span>
+              Пульт Mock-шлюза
+            </h2>
+            <div class="card-subtitle">Имитация платёжного и SMS/Email шлюза</div>
+          </div>
+          <button class="icon-btn" onclick="loadNotifications()" title="Обновить лог">
+            <span class="material-symbols-outlined">sync</span>
+          </button>
+        </div>
+
+        <!-- Pay Mode Segmented Toggle -->
+        <div style="margin-bottom:14px;">
+          <div style="font-size:11px; font-weight:700; color:var(--md-sys-color-on-surface-variant); margin-bottom:6px;">
+            РЕЖИМ ПЛАТЁЖНОГО ШЛЮЗА (/mock/pay):
+          </div>
+          <div class="segmented-group" style="width:100%; justify-content:space-between;">
+            <button class="segmented-btn active" id="modeOk" onclick="setPayMode('ok')" style="flex:1; justify-content:center;">
+              200 OK (Успех)
+            </button>
+            <button class="segmented-btn" id="modeDecline" onclick="setPayMode('decline')" style="flex:1; justify-content:center;">
+              402 Отказ
+            </button>
+            <button class="segmented-btn" id="modeError" onclick="setPayMode('error')" style="flex:1; justify-content:center;">
+              502 Сбой
+            </button>
+          </div>
+        </div>
+
+        <!-- Simulate Redis Lock TTL Expiration -->
+        <div style="margin-bottom:14px;">
+          <button class="btn-pill btn-tonal btn-sm" id="btnExpireLocks" onclick="expireAllLocksDemo()" style="width:100%; justify-content:center;">
+            <span class="material-symbols-outlined" style="font-size:16px;">timer_off</span>
+            ⏱ Сбросить TTL резервов (симуляция 10 мин)
+          </button>
+        </div>
+
+        <!-- Notification stream -->
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+          <div style="font-size:11px; font-weight:700; color:var(--md-sys-color-on-surface-variant);">
+            ЛЕНТА УВЕДОМЛЕНИЙ (/mock/notify):
+          </div>
+          <button style="background:none; border:none; color:var(--md-sys-color-primary); font-size:11px; cursor:pointer;" onclick="clearNotifications()">
+            Очистить
+          </button>
+        </div>
+        <div class="notification-stream" id="notificationsList">
+          <div style="font-size:12px; color:var(--md-sys-color-on-surface-variant); text-align:center; padding:16px;">
+            Уведомлений пока нет
+          </div>
+        </div>
+      </div>
+
+    </aside>
+
+  </main>
+
+  <!-- ===================================================================
+       SNACKBAR CONTAINER
+       =================================================================== -->
+  <!-- ===================================================================
+       MD3 DIALOG: LOGIN / REGISTER
+       =================================================================== -->
+  <div class="md3-scrim" id="authScrim" onclick="if(event.target===this) closeAuthDialog()">
+    <div class="md3-dialog" role="dialog" aria-modal="true" aria-labelledby="authDialogTitle">
+      <div class="dialog-icon">
+        <span class="material-symbols-outlined">account_circle</span>
+      </div>
+      <h2 class="dialog-headline" id="authDialogTitle">Вход в аккаунт</h2>
+
+      <div class="md3-tabs">
+        <button type="button" class="md3-tab active" id="tabLogin" onclick="switchAuthTab('login')">Вход</button>
+        <button type="button" class="md3-tab" id="tabRegister" onclick="switchAuthTab('register')">Регистрация</button>
+      </div>
+
+      <div class="dialog-error" id="authError" style="display:none;"></div>
+
+      <!-- Login -->
+      <form id="loginForm" onsubmit="submitLogin(event)" autocomplete="on">
+        <div class="form-group">
+          <label class="form-label" for="loginEmail">Email</label>
+          <input class="form-input" type="email" id="loginEmail" required autocomplete="username" placeholder="patient@test.kz">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="loginPassword">Пароль</label>
+          <input class="form-input" type="password" id="loginPassword" required autocomplete="current-password" placeholder="••••••••">
+        </div>
+        <div class="dialog-actions">
+          <button type="button" class="btn-pill btn-text" onclick="closeAuthDialog()">Отмена</button>
+          <button type="submit" class="btn-pill btn-primary">
+            <span class="material-symbols-outlined" style="font-size:18px;">login</span>
+            Войти
+          </button>
+        </div>
+      </form>
+
+      <!-- Register -->
+      <form id="registerForm" onsubmit="submitRegister(event)" style="display:none;" autocomplete="on">
+        <div class="form-group">
+          <label class="form-label" for="regName">Полное имя</label>
+          <input class="form-input" type="text" id="regName" required minlength="1" maxlength="255" autocomplete="name" placeholder="Иван Иванов">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="regEmail">Email</label>
+          <input class="form-input" type="email" id="regEmail" required autocomplete="email" placeholder="user@example.kz">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="regPhone">Телефон</label>
+          <input class="form-input" type="tel" id="regPhone" required minlength="5" maxlength="32" autocomplete="tel" placeholder="+77011234567">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="regPassword">Пароль (от 8 символов)</label>
+          <input class="form-input" type="password" id="regPassword" required minlength="8" maxlength="72" autocomplete="new-password" placeholder="••••••••">
+        </div>
+        <div class="dialog-actions">
+          <button type="button" class="btn-pill btn-text" onclick="closeAuthDialog()">Отмена</button>
+          <button type="submit" class="btn-pill btn-primary">
+            <span class="material-symbols-outlined" style="font-size:18px;">how_to_reg</span>
+            Зарегистрироваться
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="snackbar-container" id="snackbarContainer"></div>
+
+  <!-- ===================================================================
+       CLIENT LOGIC
+       =================================================================== -->
+  <script>
+    // Configuration & State
+    const API_BASE = window.location.origin;
+    // Direct mock service URL or backend proxy
+    const MOCK_BASE = "http://localhost:8001";
+
+    let state = {
+      token: null,
+      currentUser: null,
+      fullName: null,
+      role: null,
+      cityFilter: null,
+      specFilter: null,
+      doctors: [],
+      specializations: [],
+      clinics: [],
+      slotsCache: {},
+      expandedDoctorId: null
+    };
+
+    // -----------------------------------------------------------------
+    // THEME & PALETTE LOGIC
+    // -----------------------------------------------------------------
+    function initTheme() {
+      const savedTheme = localStorage.getItem('medbook_theme') || 'dark';
+      const savedPalette = localStorage.getItem('medbook_palette') || 'teal';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      document.documentElement.setAttribute('data-palette', savedPalette);
+      document.getElementById('paletteSelect').value = savedPalette;
+      document.getElementById('themeIcon').innerText = savedTheme === 'dark' ? 'light_mode' : 'dark_mode';
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('medbook_theme', next);
+      document.getElementById('themeIcon').innerText = next === 'dark' ? 'light_mode' : 'dark_mode';
+    }
+
+    function changePalette(palette) {
+      document.documentElement.setAttribute('data-palette', palette);
+      localStorage.setItem('medbook_palette', palette);
+    }
+
+    // -----------------------------------------------------------------
+    // TOAST / SNACKBAR NOTIFICATIONS
+    // -----------------------------------------------------------------
+    function showSnackbar(message, type = 'info') {
+      const container = document.getElementById('snackbarContainer');
+      const snack = document.createElement('div');
+      snack.className = `md3-snackbar ${type}`;
+
+      let icon = 'info';
+      if (type === 'error') icon = 'error';
+      if (type === 'success') icon = 'check_circle';
+
+      snack.innerHTML = `
+        <span class="material-symbols-outlined">${icon}</span>
+        <div style="flex:1;">${message}</div>
+      `;
+      container.appendChild(snack);
+
+      setTimeout(() => {
+        snack.style.opacity = '0';
+        snack.style.transform = 'translateY(10px)';
+        snack.style.transition = 'all 0.3s ease';
+        setTimeout(() => snack.remove(), 300);
+      }, 4500);
+    }
+
+    // -----------------------------------------------------------------
+    // HTTP CLIENT WITH TELEMETRY
+    // -----------------------------------------------------------------
+    async function apiRequest(endpoint, options = {}) {
+      const url = `${API_BASE}${endpoint}`;
+      options.headers = options.headers || {};
+
+      if (state.token) {
+        options.headers['Authorization'] = `Bearer ${state.token}`;
+      }
+      if (options.body && typeof options.body === 'object') {
+        options.headers['Content-Type'] = 'application/json';
+        options.body = JSON.stringify(options.body);
+      }
+
+      const start = performance.now();
+      try {
+        const resp = await fetch(url, options);
+        const elapsed = (performance.now() - start).toFixed(1);
+
+        // Update latency telemetry chip
+        const serverHeader = resp.headers.get('X-Process-Time-Ms');
+        document.getElementById('latencyText').innerText = `${serverHeader || elapsed} ms`;
+
+        let data = null;
+        const contentType = resp.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+          data = await resp.json();
+        }
+
+        if (!resp.ok) {
+          let detail = (data && data.detail) ? data.detail : `Ошибка ${resp.status}`;
+          if (Array.isArray(detail)) {
+            // FastAPI 422: list of {loc, msg}
+            detail = detail.map(d => `${(d.loc || []).slice(1).join('.')}: ${d.msg}`).join('; ');
+          }
+          // Token no longer valid (expired / user removed) -> drop session
+          if (resp.status === 401 && state.token && !endpoint.startsWith('/api/v1/auth/')) {
+            setSession(null);
+            showSnackbar('Сессия истекла или недействительна. Войдите заново.', 'error');
+          }
+          throw { status: resp.status, detail };
+        }
+        return data;
+      } catch (err) {
+        throw err;
+      }
+    }
+
+    // -----------------------------------------------------------------
+    // AUTH & DEMO QUICK-LOGINS
+    // -----------------------------------------------------------------
+    const DEMO_PASSWORD = "password123";
+    const DEMO_BUTTONS = {
+      "patient@test.kz": "btnUserPatient1",
+      "patient2@test.kz": "btnUserPatient2",
+      "admin@test.kz": "btnUserAdmin"
+    };
+
+    function decodeJwt(token) {
+      try {
+        const payload = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+        return JSON.parse(atob(payload));
+      } catch (_) {
+        return {};
+      }
+    }
+
+    // Single place that applies / clears the logged-in user in state + header.
+    function setSession(session) {
+      state.token = session ? session.token : null;
+      state.currentUser = session ? session.email : null;
+      state.fullName = session ? (session.fullName || null) : null;
+      state.role = session ? session.role : null;
+
+      if (session) {
+        localStorage.setItem('medbook_session', JSON.stringify(session));
+      } else {
+        localStorage.removeItem('medbook_session');
+      }
+      renderAuthBar();
+    }
+
+    function renderAuthBar() {
+      const loggedIn = !!state.token;
+      document.getElementById('currentUserBadge').style.display = loggedIn ? 'flex' : 'none';
+      document.getElementById('btnLogout').style.display = loggedIn ? 'inline-flex' : 'none';
+      document.getElementById('btnAccountLabel').innerText = loggedIn ? 'Аккаунт' : 'Аккаунт / Регистрация';
+      document.getElementById('adminPanel').style.display = (state.role === 'admin') ? 'block' : 'none';
+
+      if (loggedIn) {
+        document.getElementById('currentUserName').innerText = state.fullName || state.currentUser;
+        document.getElementById('currentUserEmail').innerText =
+          state.fullName ? state.currentUser : '';
+        document.getElementById('currentUserRole').innerText = state.role;
+      }
+
+      // Highlight the demo segmented button only if the user is one of the demo accounts
+      document.querySelectorAll('#demoSegmented .segmented-btn').forEach(b => b.classList.remove('active'));
+      const btnId = DEMO_BUTTONS[state.currentUser];
+      if (loggedIn && btnId) document.getElementById(btnId).classList.add('active');
+    }
+
+    function restoreSession() {
+      try {
+        const saved = JSON.parse(localStorage.getItem('medbook_session') || 'null');
+        if (!saved || !saved.token) return false;
+        const exp = decodeJwt(saved.token).exp;
+        if (!exp || exp * 1000 <= Date.now()) {
+          localStorage.removeItem('medbook_session');
+          return false;
+        }
+        setSession(saved);
+        return true;
+      } catch (_) {
+        localStorage.removeItem('medbook_session');
+        return false;
+      }
+    }
+
+    // POST /auth/login -> session object (role is read from the JWT "role" claim)
+    async function loginRequest(email, password, fullName) {
+      const resp = await apiRequest('/api/v1/auth/login', {
+        method: 'POST',
+        body: { email, password }
+      });
+      const claims = decodeJwt(resp.access_token);
+      return {
+        token: resp.access_token,
+        email: email.toLowerCase(),
+        fullName: fullName || null,
+        role: claims.role || 'patient'
+      };
+    }
+
+    function onSessionChanged(message) {
+      showSnackbar(message, 'success');
+      state.expandedDoctorId = null;
+      loadMyAppointments();
+      loadDoctors();
+    }
+
+    async function loginDemo(profile) {
+      const accounts = {
+        patient1: { email: "patient@test.kz", name: null },
+        patient2: { email: "patient2@test.kz", name: "Алихан Смаилов (Пациент 2)" },
+        admin: { email: "admin@test.kz", name: null }
+      };
+      const { email, name } = accounts[profile];
+
+      try {
+        let session;
+        try {
+          session = await loginRequest(email, DEMO_PASSWORD, name);
+        } catch (e) {
+          // Patient 2 does not exist yet -> register it on the fly
+          if (profile === 'patient2' && e.status === 401) {
+            await apiRequest('/api/v1/auth/register', {
+              method: 'POST',
+              body: {
+                email,
+                phone: "+77012223344",
+                full_name: name,
+                password: DEMO_PASSWORD
+              }
+            });
+            session = await loginRequest(email, DEMO_PASSWORD, name);
+          } else {
+            throw e;
+          }
+        }
+        setSession(session);
+        onSessionChanged(`Вход выполнен: ${email}`);
+      } catch (err) {
+        showSnackbar(`Ошибка входа: ${err.detail || err}`, 'error');
+      }
+    }
+
+    function logout() {
+      setSession(null);
+      state.expandedDoctorId = null;
+      loadMyAppointments();
+      loadDoctors();
+      showSnackbar('Вы вышли из аккаунта', 'info');
+    }
+
+    // ---- MD3 Dialog: Login / Register ----
+    function openAuthDialog(tab = 'login') {
+      switchAuthTab(tab);
+      document.getElementById('authScrim').classList.add('open');
+      setTimeout(() => {
+        const first = document.querySelector(tab === 'login' ? '#loginEmail' : '#regName');
+        if (first) first.focus();
+      }, 50);
+    }
+
+    function closeAuthDialog() {
+      document.getElementById('authScrim').classList.remove('open');
+    }
+
+    function switchAuthTab(tab) {
+      const isLogin = tab === 'login';
+      document.getElementById('tabLogin').classList.toggle('active', isLogin);
+      document.getElementById('tabRegister').classList.toggle('active', !isLogin);
+      document.getElementById('loginForm').style.display = isLogin ? 'block' : 'none';
+      document.getElementById('registerForm').style.display = isLogin ? 'none' : 'block';
+      document.getElementById('authDialogTitle').innerText = isLogin ? 'Вход в аккаунт' : 'Создание аккаунта';
+      document.getElementById('authError').style.display = 'none';
+    }
+
+    function showAuthError(message) {
+      const box = document.getElementById('authError');
+      box.innerText = message;
+      box.style.display = 'block';
+    }
+
+    async function submitLogin(event) {
+      event.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      try {
+        const session = await loginRequest(email, password, null);
+        setSession(session);
+        closeAuthDialog();
+        document.getElementById('loginForm').reset();
+        onSessionChanged(`Вход выполнен: ${session.email}`);
+      } catch (err) {
+        showAuthError(err.detail || 'Не удалось выполнить вход');
+      }
+    }
+
+    async function submitRegister(event) {
+      event.preventDefault();
+      const fullName = document.getElementById('regName').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const phone = document.getElementById('regPhone').value.trim();
+      const password = document.getElementById('regPassword').value;
+      try {
+        await apiRequest('/api/v1/auth/register', {
+          method: 'POST',
+          body: { full_name: fullName, email, phone, password }
+        });
+        // Automatic sign-in right after successful registration
+        const session = await loginRequest(email, password, fullName);
+        setSession(session);
+        closeAuthDialog();
+        document.getElementById('registerForm').reset();
+        onSessionChanged(`Аккаунт создан, добро пожаловать, ${fullName}!`);
+      } catch (err) {
+        showAuthError(err.detail || 'Не удалось зарегистрироваться');
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeAuthDialog();
+    });
+
+    // -----------------------------------------------------------------
+    // CATALOG & SPECIALIZATIONS & CLINICS
+    // -----------------------------------------------------------------
+    function renderCityChips() {
+      const cityGroup = document.getElementById('cityChips');
+      if (!cityGroup) return;
+      const cities = Array.from(new Set(['Алматы', 'Астана', ...state.clinics.map(c => c.city).filter(Boolean)]));
+      cityGroup.innerHTML = '';
+
+      const allBtn = document.createElement('button');
+      allBtn.className = `filter-chip${state.cityFilter === null ? ' active' : ''}`;
+      allBtn.innerText = 'Все города';
+      allBtn.onclick = () => setCityFilter(null, allBtn);
+      cityGroup.appendChild(allBtn);
+
+      cities.forEach(city => {
+        const btn = document.createElement('button');
+        btn.className = `filter-chip${state.cityFilter === city ? ' active' : ''}`;
+        btn.innerText = city;
+        btn.onclick = () => setCityFilter(city, btn);
+        cityGroup.appendChild(btn);
+      });
+    }
+
+    function renderSpecChips() {
+      const specGroup = document.getElementById('specChips');
+      if (!specGroup) return;
+      specGroup.innerHTML = '';
+
+      const allBtn = document.createElement('button');
+      allBtn.className = `filter-chip${state.specFilter === null ? ' active' : ''}`;
+      allBtn.innerText = 'Все специализации';
+      allBtn.onclick = () => setSpecFilter(null, allBtn);
+      specGroup.appendChild(allBtn);
+
+      state.specializations.forEach(s => {
+        const btn = document.createElement('button');
+        btn.className = `filter-chip${state.specFilter === s.id ? ' active' : ''}`;
+        btn.innerText = s.name;
+        btn.onclick = () => setSpecFilter(s.id, btn);
+        specGroup.appendChild(btn);
+      });
+    }
+
+    async function loadCatalogMeta() {
+      try {
+        const [specs, clinics] = await Promise.all([
+          apiRequest('/api/v1/specializations'),
+          apiRequest('/api/v1/clinics')
+        ]);
+        state.specializations = specs;
+        state.clinics = clinics;
+
+        renderCityChips();
+        renderSpecChips();
+        populateAdminSelects();
+      } catch (e) {
+        console.error("Meta load error", e);
+      }
+    }
+
+    function setCityFilter(city, btn) {
+      document.querySelectorAll('#cityChips .filter-chip').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.cityFilter = city;
+      loadDoctors();
+    }
+
+    function setSpecFilter(specId, btn) {
+      document.querySelectorAll('#specChips .filter-chip').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.specFilter = specId;
+      loadDoctors();
+    }
+
+    async function loadDoctors() {
+      const container = document.getElementById('doctorsList');
+      let params = new URLSearchParams();
+      if (state.cityFilter) params.append('city', state.cityFilter);
+      if (state.specFilter) params.append('specialization_id', state.specFilter);
+
+      try {
+        const doctors = await apiRequest(`/api/v1/doctors?${params.toString()}`);
+        state.doctors = doctors;
+        if (!state.cityFilter && !state.specFilter) {
+          state.allDoctors = doctors;
+        }
+        populateAdminDoctorSelect();
+
+        if (doctors.length === 0) {
+          container.innerHTML = `<div style="text-align:center; padding:32px; color:var(--md-sys-color-on-surface-variant);">Врачей по выбранным фильтрам не найдено</div>`;
+          return;
+        }
+
+        container.innerHTML = doctors.map(doc => {
+          const clinic = state.clinics.find(c => c.id === doc.clinic_id) || { name: "Клиника", city: "" };
+          const spec = state.specializations.find(s => s.id === doc.specialization_id) || { name: "Врач" };
+          const isExpanded = state.expandedDoctorId === doc.id;
+
+          return `
+            <div class="doctor-card" id="docCard-${doc.id}">
+              <div class="doctor-header">
+                <div class="doctor-info-main">
+                  <div class="doctor-avatar">
+                    <span class="material-symbols-outlined">person</span>
+                  </div>
+                  <div>
+                    <div class="doctor-name">${doc.full_name}</div>
+                    <div class="doctor-meta">
+                      <span style="font-weight:600; color:var(--md-sys-color-primary);">${spec.name}</span>
+                      <span>•</span>
+                      <span>${clinic.name} (${clinic.city})</span>
+                      <span>•</span>
+                      <span>${doc.experience_years} лет стажа</span>
+                      <span>•</span>
+                      <span style="color:#ffb74d;">★ ${doc.rating}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="display:flex; align-items:center; gap:16px;">
+                  <div class="doctor-price-tag">
+                    <div class="price-value">${Number(doc.price).toLocaleString()} ₸</div>
+                    <div class="price-sub">стоимость приёма</div>
+                  </div>
+                  <button class="btn-pill btn-tonal btn-sm" onclick="toggleDoctorSlots(${doc.id})">
+                    <span class="material-symbols-outlined">${isExpanded ? 'expand_less' : 'schedule'}</span>
+                    ${isExpanded ? 'Скрыть слоты' : 'Выбрать слот'}
+                  </button>
+                </div>
+              </div>
+
+              <!-- Slots section -->
+              <div id="slotsBox-${doc.id}" style="${isExpanded ? 'display:block;' : 'display:none;'}">
+                <div class="slots-container">
+                  <div class="slots-title">
+                    <span>Свободное время для записи:</span>
+                    <span style="font-size:11px; font-weight:400; color:var(--md-sys-color-on-surface-variant);">
+                      * Нажмите на серый слот для симуляции 409 Conflict (Double Booking)
+                    </span>
+                  </div>
+                  <div class="slots-grid" id="slotsGrid-${doc.id}">
+                    Загрузка слотов...
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        if (state.expandedDoctorId) {
+          fetchAndRenderSlots(state.expandedDoctorId);
+        }
+      } catch (err) {
+        container.innerHTML = `<div style="color:var(--md-sys-color-error); padding:20px;">Ошибка загрузки врачей: ${err.detail || err}</div>`;
+      }
+    }
+
+    function populateAdminDoctorSelect(preferredId = null) {
+      const select = document.getElementById('adminDoctorSelect');
+      if (!select) return;
+      const prev = preferredId || select.value;
+      const list = (state.allDoctors && state.allDoctors.length > state.doctors.length) ? state.allDoctors : state.doctors;
+      select.innerHTML = list.map(d => `<option value="${d.id}">${d.full_name}</option>`).join('');
+      if (prev && list.some(d => String(d.id) === String(prev))) {
+        select.value = String(prev);
+      }
+    }
+
+    function populateAdminSelects() {
+      const clinicSelect = document.getElementById('adminDocClinic');
+      if (clinicSelect) {
+        const prevClinic = clinicSelect.value;
+        clinicSelect.innerHTML = state.clinics.map(c => `<option value="${c.id}">${c.name} (${c.city})</option>`).join('');
+        if (prevClinic && state.clinics.some(c => String(c.id) === String(prevClinic))) {
+          clinicSelect.value = String(prevClinic);
+        }
+      }
+
+      const specSelect = document.getElementById('adminDocSpec');
+      if (specSelect) {
+        const prevSpec = specSelect.value;
+        specSelect.innerHTML = state.specializations.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+        if (prevSpec && state.specializations.some(s => String(s.id) === String(prevSpec))) {
+          specSelect.value = String(prevSpec);
+        }
+      }
+
+      populateAdminDoctorSelect();
+    }
+
+    async function toggleDoctorSlots(doctorId) {
+      if (state.expandedDoctorId === doctorId) {
+        state.expandedDoctorId = null;
+        const box = document.getElementById(`slotsBox-${doctorId}`);
+        if (box) box.style.display = 'none';
+      } else {
+        state.expandedDoctorId = doctorId;
+        loadDoctors();
+      }
+    }
+
+    async function fetchAndRenderSlots(doctorId) {
+      const grid = document.getElementById(`slotsGrid-${doctorId}`);
+      if (!grid) return;
+
+      try {
+        const slots = await apiRequest(`/api/v1/doctors/${doctorId}/slots`);
+        state.slotsCache[doctorId] = slots;
+        state.slotsMap = state.slotsMap || {};
+        slots.forEach(s => { state.slotsMap[s.id] = s; });
+
+        if (slots.length === 0) {
+          grid.innerHTML = `<div style="font-size:12px; color:var(--md-sys-color-on-surface-variant);">Нет доступных слотов на ближайшие дни</div>`;
+          return;
+        }
+
+        grid.innerHTML = slots.map(slot => {
+          const start = parseLocalIsoDate(slot.start_time);
+          const timeStr = start.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+          const dateStr = start.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' });
+
+          if (slot.is_available) {
+            return `
+              <button class="slot-chip available" onclick="bookSlot(${slot.id}, ${doctorId})">
+                <span class="material-symbols-outlined" style="font-size:16px;">alarm</span>
+                ${dateStr}, ${timeStr}
+              </button>
+            `;
+          } else {
+            return `
+              <button class="slot-chip booked" onclick="testDoubleBooking(${slot.id})" title="Слот занят. Кликните для проверки защиты от Race Condition!">
+                <span class="material-symbols-outlined" style="font-size:16px;">lock</span>
+                ${dateStr}, ${timeStr} (Занят)
+              </button>
+            `;
+          }
+        }).join('');
+      } catch (err) {
+        grid.innerHTML = `<div style="color:var(--md-sys-color-error); font-size:12px;">Ошибка загрузки слотов: ${err.detail || err}</div>`;
+      }
+    }
+
+    // -----------------------------------------------------------------
+    // BOOKING ACTIONS (CP / RACE CONDITION)
+    // -----------------------------------------------------------------
+    async function bookSlot(slotId, doctorId) {
+      try {
+        const appt = await apiRequest('/api/v1/appointments', {
+          method: 'POST',
+          body: { slot_id: slotId, notes: "Запись через Material You Web" }
+        });
+        showSnackbar(`Слот #${slotId} успешно забронирован! Статус: PENDING`, 'success');
+        fetchAndRenderSlots(doctorId);
+        loadMyAppointments();
+        loadNotifications();
+      } catch (err) {
+        if (err.status === 409) {
+          showSnackbar(`[409 CONFLICT] ${err.detail}`, 'error');
+        } else {
+          showSnackbar(`Ошибка бронирования (${err.status}): ${err.detail}`, 'error');
+        }
+      }
+    }
+
+    // Double Booking Simulation
+    async function testDoubleBooking(slotId) {
+      showSnackbar(`Тест Double Booking на слоте #${slotId}...`, 'info');
+      try {
+        await apiRequest('/api/v1/appointments', {
+          method: 'POST',
+          body: { slot_id: slotId, notes: "Тест коллизии" }
+        });
+      } catch (err) {
+        if (err.status === 409) {
+          showSnackbar(`[409 CONFLICT] Защита CP сработала: ${err.detail}`, 'error');
+        } else {
+          showSnackbar(`Ответ: ${err.status} - ${err.detail}`, 'error');
+        }
+      }
+    }
+
+    // -----------------------------------------------------------------
+    // MY APPOINTMENTS & LIVE COUNTDOWN TIMER
+    // -----------------------------------------------------------------
+    // Parse ISO datetime strings ("YYYY-MM-DDTHH:MM:SS") as local Almaty wall-clock time
+    function parseLocalIsoDate(isoStr) {
+      if (!isoStr) return new Date();
+      const clean = String(isoStr).replace(/Z$/, '').split('+')[0];
+      const [datePart, timePart = '00:00:00'] = clean.split('T');
+      const [y, m, d] = datePart.split('-').map(Number);
+      const [hh, mm, ss = 0] = timePart.split(':').map( v => parseInt(v, 10) || 0 );
+      return new Date(y, (m || 1) - 1, d || 1, hh, mm, ss);
+    }
+
+    function formatLocalDateTime(isoStr) {
+      const dt = parseLocalIsoDate(isoStr);
+      return dt.toLocaleString('ru-RU', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      });
+    }
+
+    function formatSlotRange(slot) {
+      if (!slot) return null;
+      const start = parseLocalIsoDate(slot.start_time);
+      const end = parseLocalIsoDate(slot.end_time);
+      const dateStr = start.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      const startTime = start.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+      const endTime = end.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+      return `${dateStr}, ${startTime}–${endTime}`;
+    }
+
+    function formatCountdown(seconds) {
+      const s = Math.max(0, Math.floor(Number(seconds) || 0));
+      const mm = String(Math.floor(s / 60)).padStart(2, '0');
+      const ss = String(s % 60).padStart(2, '0');
+      return `${mm}:${ss}`;
+    }
+
+    let isRefreshingExpired = false;
+    function tickPendingTimers() {
+      const badges = document.querySelectorAll('.badge-timer[data-expires]');
+      if (badges.length === 0) return;
+
+      let expiredDetected = false;
+      badges.forEach(badge => {
+        let rem = parseInt(badge.getAttribute('data-expires'), 10);
+        if (Number.isNaN(rem)) return;
+        rem -= 1;
+        badge.setAttribute('data-expires', String(Math.max(0, rem)));
+        badge.innerText = `⏳ Осталось ${formatCountdown(rem)}`;
+        if (rem <= 0) {
+          expiredDetected = true;
+        }
+      });
+
+      if (expiredDetected && !isRefreshingExpired) {
+        isRefreshingExpired = true;
+        setTimeout(async () => {
+          try {
+            await loadMyAppointments();
+            if (state.expandedDoctorId) {
+              await fetchAndRenderSlots(state.expandedDoctorId);
+            }
+            showSnackbar('Время резерва (PENDING) истекло — запись отменена, слот снова свободен!', 'info');
+          } finally {
+            isRefreshingExpired = false;
+          }
+        }, 400);
+      }
+    }
+
+    async function ensureSlotsLoadedForDoctors(doctorIds) {
+      state.slotsMap = state.slotsMap || {};
+      const missingDocIds = doctorIds.filter(id => !state.slotsCache[id]);
+      if (missingDocIds.length === 0) return;
+      await Promise.all(missingDocIds.map(async (docId) => {
+        try {
+          const slots = await apiRequest(`/api/v1/doctors/${docId}/slots`);
+          state.slotsCache[docId] = slots;
+          slots.forEach(s => { state.slotsMap[s.id] = s; });
+        } catch (_) {}
+      }));
+    }
+
+    async function loadMyAppointments() {
+      const container = document.getElementById('myAppointmentsList');
+      if (!state.token) {
+        container.innerHTML = `<div style="text-align:center; padding:16px; color:var(--md-sys-color-on-surface-variant); font-size:13px;">Войдите для просмотра записей</div>`;
+        return;
+      }
+
+      try {
+        const appts = await apiRequest('/api/v1/appointments/my');
+        if (appts.length === 0) {
+          container.innerHTML = `<div style="text-align:center; padding:24px; color:var(--md-sys-color-on-surface-variant); font-size:13px;">У вас пока нет записей</div>`;
+          return;
+        }
+
+        const uniqueDocIds = Array.from(new Set(appts.map(a => a.doctor_id)));
+        await ensureSlotsLoadedForDoctors(uniqueDocIds);
+
+        container.innerHTML = appts.map(a => {
+          const doctor = (state.allDoctors || state.doctors).find(d => d.id === a.doctor_id);
+          const docName = doctor ? doctor.full_name : `Врач #${a.doctor_id}`;
+          const slotObj = state.slotsMap ? state.slotsMap[a.slot_id] : null;
+          const slotTimeLabel = formatSlotRange(slotObj);
+
+          let statusBadge = `<span class="md3-badge badge-${a.status.toLowerCase()}">${a.status}</span>`;
+          let payBadge = `<span class="md3-badge badge-${a.payment_status.toLowerCase()}">${a.payment_status}</span>`;
+          let timerBadge = '';
+          if (a.status === 'PENDING') {
+            const ttl = (a.expires_in_seconds != null) ? a.expires_in_seconds : 600;
+            timerBadge = `<span class="md3-badge badge-timer" data-expires="${ttl}" data-appt-id="${a.id}">⏳ Осталось ${formatCountdown(ttl)}</span>`;
+          }
+
+          let actions = '';
+          if (a.status === 'PENDING') {
+            actions = `
+              <div style="display:flex; gap:8px; margin-top:8px;">
+                <button class="btn-pill btn-primary btn-sm" onclick="confirmAppointment(${a.id})">
+                  <span class="material-symbols-outlined" style="font-size:16px;">payment</span>
+                  Оплатить
+                </button>
+                <button class="btn-pill btn-danger-tonal btn-sm" onclick="cancelAppointment(${a.id})">
+                  Отменить
+                </button>
+              </div>
+            `;
+          } else if (a.status === 'CONFIRMED') {
+            actions = `
+              <div style="margin-top:8px;">
+                <button class="btn-pill btn-danger-tonal btn-sm" onclick="cancelAppointment(${a.id})">
+                  Отменить (с возвратом)
+                </button>
+              </div>
+            `;
+          }
+
+          return `
+            <div class="appointment-item">
+              <div class="appt-header">
+                <div style="font-weight:700; font-size:14px; color:var(--md-sys-color-on-surface);">${docName}</div>
+                <div class="appt-badges">
+                  ${timerBadge}
+                  ${statusBadge}
+                  ${payBadge}
+                </div>
+              </div>
+              ${slotTimeLabel ? `
+                <div style="font-size:12px; font-weight:600; color:var(--md-sys-color-primary); display:flex; align-items:center; gap:4px;">
+                  <span class="material-symbols-outlined" style="font-size:15px;">schedule</span>
+                  Время приёма: ${slotTimeLabel} (Слот #${a.slot_id})
+                </div>
+              ` : ''}
+              <div style="font-size:12px; color:var(--md-sys-color-on-surface-variant);">
+                Запись #${a.id} • Создана: ${formatLocalDateTime(a.created_at)}
+              </div>
+              ${a.notes ? `<div style="font-size:12px; font-style:italic;">"${a.notes}"</div>` : ''}
+              ${actions}
+            </div>
+          `;
+        }).join('');
+      } catch (err) {
+        container.innerHTML = `<div style="color:var(--md-sys-color-error); font-size:12px; padding:12px;">Ошибка: ${err.detail || err}</div>`;
+      }
+    }
+
+    async function confirmAppointment(appointmentId) {
+      try {
+        const res = await apiRequest(`/api/v1/appointments/${appointmentId}/confirm`, {
+          method: 'POST'
+        });
+        showSnackbar(`Запись #${appointmentId} успешно подтверждена и оплачена!`, 'success');
+        loadMyAppointments();
+        loadNotifications();
+      } catch (err) {
+        showSnackbar(`Ошибка подтверждения (${err.status}): ${err.detail}`, 'error');
+      }
+    }
+
+    async function cancelAppointment(appointmentId) {
+      try {
+        await apiRequest(`/api/v1/appointments/${appointmentId}/cancel`, {
+          method: 'PATCH'
+        });
+        showSnackbar(`Запись #${appointmentId} отменена! Слот освобождён.`, 'info');
+        loadMyAppointments();
+        if (state.expandedDoctorId) fetchAndRenderSlots(state.expandedDoctorId);
+        loadNotifications();
+      } catch (err) {
+        showSnackbar(`Ошибка отмены: ${err.detail}`, 'error');
+      }
+    }
+
+    // -----------------------------------------------------------------
+    // ADMIN FUNCTIONS (TABS + CLINICS, SPECIALIZATIONS, DOCTORS, SLOTS)
+    // -----------------------------------------------------------------
+    function switchAdminTab(tab) {
+      const map = {
+        slot: ['tabAdminSlot', 'adminPaneSlot'],
+        doctor: ['tabAdminDoctor', 'adminPaneDoctor'],
+        clinic: ['tabAdminClinic', 'adminPaneClinic'],
+        spec: ['tabAdminSpec', 'adminPaneSpec']
+      };
+      Object.entries(map).forEach(([key, [tabId, paneId]]) => {
+        const active = (key === tab);
+        document.getElementById(tabId).classList.toggle('active', active);
+        document.getElementById(paneId).style.display = active ? 'block' : 'none';
+      });
+    }
+
+    async function createClinicAdmin() {
+      const name = document.getElementById('adminClinicName').value.trim();
+      const city = document.getElementById('adminClinicCity').value.trim();
+      const address = document.getElementById('adminClinicAddress').value.trim();
+      const rating = parseFloat(document.getElementById('adminClinicRating').value);
+
+      if (!name || !city || !address || Number.isNaN(rating)) {
+        showSnackbar("Заполните название, город, адрес и рейтинг клиники", 'error');
+        return;
+      }
+
+      try {
+        const created = await apiRequest('/api/v1/clinics', {
+          method: 'POST',
+          body: { name, city, address, rating }
+        });
+        document.getElementById('adminClinicName').value = '';
+        document.getElementById('adminClinicAddress').value = '';
+        await loadCatalogMeta();
+        document.getElementById('adminDocClinic').value = String(created.id);
+        showSnackbar(`Клиника «${created.name}» (${created.city}) успешно добавлена!`, 'success');
+      } catch (err) {
+        showSnackbar(`Ошибка создания клиники (${err.status}): ${err.detail}`, 'error');
+      }
+    }
+
+    async function createSpecAdmin() {
+      const name = document.getElementById('adminSpecName').value.trim();
+      const description = document.getElementById('adminSpecDesc').value.trim() || null;
+
+      if (!name) {
+        showSnackbar("Введите название специализации", 'error');
+        return;
+      }
+
+      try {
+        const created = await apiRequest('/api/v1/specializations', {
+          method: 'POST',
+          body: { name, description }
+        });
+        document.getElementById('adminSpecName').value = '';
+        document.getElementById('adminSpecDesc').value = '';
+        await loadCatalogMeta();
+        document.getElementById('adminDocSpec').value = String(created.id);
+        showSnackbar(`Специализация «${created.name}» добавлена!`, 'success');
+      } catch (err) {
+        showSnackbar(`Ошибка создания специализации (${err.status}): ${err.detail}`, 'error');
+      }
+    }
+
+    async function createDoctorAdmin() {
+      const full_name = document.getElementById('adminDocName').value.trim();
+      const clinic_id = parseInt(document.getElementById('adminDocClinic').value, 10);
+      const specialization_id = parseInt(document.getElementById('adminDocSpec').value, 10);
+      const experience_years = parseInt(document.getElementById('adminDocExp').value, 10);
+      const price = parseFloat(document.getElementById('adminDocPrice').value);
+      const rating = parseFloat(document.getElementById('adminDocRating').value);
+
+      if (!full_name || !clinic_id || !specialization_id || Number.isNaN(experience_years) || Number.isNaN(price) || Number.isNaN(rating)) {
+        showSnackbar("Заполните все поля карточки врача", 'error');
+        return;
+      }
+
+      try {
+        const created = await apiRequest('/api/v1/doctors', {
+          method: 'POST',
+          body: { full_name, clinic_id, specialization_id, experience_years, price, rating }
+        });
+        document.getElementById('adminDocName').value = '';
+        state.allDoctors = await apiRequest('/api/v1/doctors');
+        await loadDoctors();
+        populateAdminDoctorSelect(created.id);
+        showSnackbar(`Врач «${created.full_name}» добавлен! Кэш каталога в Redis инвалидирован.`, 'success');
+      } catch (err) {
+        showSnackbar(`Ошибка добавления врача (${err.status}): ${err.detail}`, 'error');
+      }
+    }
+
+    // <input type="datetime-local"> value is already local wall-clock time
+    // ("YYYY-MM-DDTHH:MM"). Never pass it through Date#toISOString(): that
+    // converts to UTC and shifts the slot (13:00 -> 08:00 in UTC+5).
+    function toLocalIso(value) {
+      return value.length === 16 ? `${value}:00` : value.slice(0, 19);
+    }
+
+    async function createSlotAdmin() {
+      const doctorId = document.getElementById('adminDoctorSelect').value;
+      const start = document.getElementById('adminSlotStart').value;
+      const end = document.getElementById('adminSlotEnd').value;
+
+      if (!doctorId || !start || !end) {
+        showSnackbar("Заполните врача, время начала и окончания", 'error');
+        return;
+      }
+
+      try {
+        await apiRequest(`/api/v1/doctors/${doctorId}/slots`, {
+          method: 'POST',
+          body: {
+            start_time: toLocalIso(start),
+            end_time: toLocalIso(end)
+          }
+        });
+        showSnackbar(`Новый слот создан на ${start.replace('T', ' ')}. Кэш слотов врача в Redis инвалидирован.`, 'success');
+        if (state.expandedDoctorId == doctorId) {
+          fetchAndRenderSlots(doctorId);
+        }
+      } catch (err) {
+        showSnackbar(`Ошибка создания слота (${err.status}): ${err.detail}`, 'error');
+      }
+    }
+
+    // -----------------------------------------------------------------
+    // MOCK GATEWAY (CONSOLE & NOTIFICATIONS)
+    // -----------------------------------------------------------------
+    async function expireAllLocksDemo() {
+      try {
+        const res = await apiRequest('/api/v1/mock/expire-locks', { method: 'POST' });
+        const count = res.cancelled_appointments ?? res.cancelled ?? 0;
+        showSnackbar(
+          `TTL резервов сброшен! Автоматически отменено PENDING-записей: ${count}`,
+          count > 0 ? 'success' : 'info'
+        );
+        await loadMyAppointments();
+        if (state.expandedDoctorId) {
+          await fetchAndRenderSlots(state.expandedDoctorId);
+        }
+      } catch (err) {
+        showSnackbar(`Ошибка сброса TTL: ${err.detail || err}`, 'error');
+      }
+    }
+
+    async function setPayMode(mode) {
+      document.querySelectorAll('#modeOk, #modeDecline, #modeError').forEach(b => b.classList.remove('active'));
+      if (mode === 'ok') document.getElementById('modeOk').classList.add('active');
+      if (mode === 'decline') document.getElementById('modeDecline').classList.add('active');
+      if (mode === 'error') document.getElementById('modeError').classList.add('active');
+
+      try {
+        // Try direct call to mock service or fallback to backend proxy
+        let res;
+        try {
+          res = await fetch(`${MOCK_BASE}/mock/pay/mode`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ mode })
+          });
+        } catch (_) {
+          res = await fetch(`${API_BASE}/api/v1/mock/pay/mode`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ mode })
+          });
+        }
+        showSnackbar(`Режим шлюза переключен: ${mode.toUpperCase()}`, 'info');
+      } catch (e) {
+        console.error("Set pay mode error", e);
+      }
+    }
+
+    async function loadNotifications() {
+      const container = document.getElementById('notificationsList');
+      try {
+        let resp;
+        try {
+          resp = await fetch(`${MOCK_BASE}/mock/notifications`);
+        } catch (_) {
+          resp = await fetch(`${API_BASE}/api/v1/mock/notifications`);
+        }
+        if (!resp.ok) return;
+        const list = await resp.json();
+
+        if (list.length === 0) {
+          container.innerHTML = `<div style="font-size:12px; color:var(--md-sys-color-on-surface-variant); text-align:center; padding:16px;">Уведомлений пока нет</div>`;
+          return;
+        }
+
+        container.innerHTML = list.slice(-10).reverse().map(n => `
+          <div class="notify-card">
+            <div class="notify-event">${n.event}</div>
+            <div style="color:var(--md-sys-color-on-surface); font-weight:500;">${n.message || ''}</div>
+            <div style="color:var(--md-sys-color-on-surface-variant); font-size:11px;">
+              Пользователь #${n.user_id} • Appt #${n.appointment_id || '-'} • ${n.phone || n.email || ''}
+            </div>
+          </div>
+        `).join('');
+      } catch (e) {
+        console.error("Notification load error", e);
+      }
+    }
+
+    async function clearNotifications() {
+      try {
+        await fetch(`${MOCK_BASE}/mock/notifications`, { method: 'DELETE' });
+        loadNotifications();
+        showSnackbar("Лента уведомлений очищена", 'info');
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    // -----------------------------------------------------------------
+    // HEALTH CHECK
+    // -----------------------------------------------------------------
+    async function checkHealth() {
+      try {
+        const resp = await fetch(`${API_BASE}/health`);
+        const data = await resp.json();
+        const ok = (data.status === 'ok');
+        document.getElementById('healthDot').style.background = ok ? 'var(--md-sys-color-success)' : '#ffb74d';
+        document.getElementById('healthText').innerText = `Система: ${data.status.toUpperCase()}`;
+      } catch (_) {
+        document.getElementById('healthDot').style.background = 'var(--md-sys-color-error)';
+        document.getElementById('healthText').innerText = 'Система: Offline';
+      }
+    }
+
+    // -----------------------------------------------------------------
+    // INITIALIZATION
+    // -----------------------------------------------------------------
+    window.addEventListener('DOMContentLoaded', async () => {
+      initTheme();
+      checkHealth();
+      setInterval(checkHealth, 15000);
+      setInterval(tickPendingTimers, 1000);
+
+      // Auto-set tomorrow's default time for admin slot creation
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      tomorrow.setHours(12, 0, 0, 0);
+      const startIso = new Date(tomorrow.getTime() - (tomorrow.getTimezoneOffset() * 60000)).toISOString().slice(0, 16);
+      tomorrow.setMinutes(tomorrow.getMinutes() + 30);
+      const endIso = new Date(tomorrow.getTime() - (tomorrow.getTimezoneOffset() * 60000)).toISOString().slice(0, 16);
+      if (document.getElementById('adminSlotStart')) document.getElementById('adminSlotStart').value = startIso;
+      if (document.getElementById('adminSlotEnd')) document.getElementById('adminSlotEnd').value = endIso;
+
+      await loadCatalogMeta();
+      if (!restoreSession()) {
+        await loginDemo('patient1');
+      } else {
+        loadMyAppointments();
+        loadDoctors();
+      }
+      loadNotifications();
+    });
+  </script>
+</body>
+</html>
